@@ -1,0 +1,6 @@
+*.o
+.vscode
+*.eep
+*.elf
+*.lss
+dep/
