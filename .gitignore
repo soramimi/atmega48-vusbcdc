@@ -1,7 +1,4 @@
-*.o
 .vscode
-*.eep
+*.o
 *.elf
-*.lss
-dep/
 *.hex
