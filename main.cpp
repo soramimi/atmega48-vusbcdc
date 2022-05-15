@@ -286,9 +286,11 @@ static void hardwareInit(void)
 int main(void)
 {
 #if 0
+//	_delay_ms(10);
 	ISPLCD lcd;
 	lcd.start();
 	lcd.led(true);
+//	lcd.putchar('A');
 #endif
 
 	wdt_enable(WDTO_1S);
