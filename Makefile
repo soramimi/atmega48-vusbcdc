@@ -101,7 +101,7 @@ size: ${TARGET}
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf $(OBJECTS) cdcmega.elf cdcmega.hex cdcmega.eep cdcmega.lss dep
+	-rm -rf *.o cdcmega.elf cdcmega.hex cdcmega.eep cdcmega.lss dep
 
 ## Other dependencies
 -include $(shell mkdir dep 2>/dev/null) $(wildcard dep/*)

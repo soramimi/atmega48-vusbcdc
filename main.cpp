@@ -19,6 +19,7 @@
 #include <string.h>
 #include <util/delay.h>
 #include "uart.h"
+#include "isplcd.h"
 
 extern "C" {
 #include "oddebug.h"
@@ -284,6 +285,12 @@ static void hardwareInit(void)
 
 int main(void)
 {
+#if 0
+	ISPLCD lcd;
+	lcd.start();
+	lcd.led(true);
+#endif
+
 	wdt_enable(WDTO_1S);
 	hardwareInit();
 	usbInit();
