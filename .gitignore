@@ -4,3 +4,4 @@
 *.elf
 *.lss
 dep/
+*.hex

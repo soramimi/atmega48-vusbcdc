@@ -109,5 +109,5 @@ clean:
 
 AVRISP = /dev/ttyUSB0
 
-write:
+write: $(PROJECT).hex
 	avrdude -c avrisp -P $(AVRISP) -b 19200 -p m48 -U hfuse:w:0xdf:m  -U lfuse:w:0xe6:m -U flash:w:$(PROJECT).hex
