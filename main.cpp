@@ -18,11 +18,12 @@
 #include <avr/pgmspace.h>
 #include <avr/wdt.h>
 #include <util/delay.h>
-
-#include "oddebug.h"
-#include "usbdrv.h"
 #include "uart.h"
 
+extern "C" {
+#include "oddebug.h"
+#include "usbdrv.h"
+}
 
 enum {
     SEND_ENCAPSULATED_COMMAND = 0,
@@ -158,7 +159,7 @@ static void resetUart(void)
 
 uchar usbFunctionSetup(uchar data[8])
 {
-usbRequest_t    *rq = (void *)data;
+	usbRequest_t    *rq = (usbRequest *)data;
 
     if((rq->bmRequestType & USBRQ_TYPE_MASK) == USBRQ_TYPE_CLASS){    /* class request type */
 

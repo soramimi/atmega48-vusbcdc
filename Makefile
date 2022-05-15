@@ -20,6 +20,7 @@ CLK = 16000000UL
 
 TARGET = cdcmega.elf
 CC = avr-gcc
+CXX = avr-g++
 
 ## Options common to compile, link and assembly rules
 COMMON = -mmcu=$(MCU) -DF_CPU=$(CLK)
@@ -31,7 +32,7 @@ COMMON = -mmcu=$(MCU) -DF_CPU=$(CLK)
 
 ## Compile options common for all C compilation units.
 CFLAGS = $(COMMON)
-CFLAGS += -Wall -gdwarf-2 -Os -fsigned-char
+CFLAGS += -Wall -Wno-narrowing -gdwarf-2 -Os -fsigned-char
 CFLAGS += -MD -MP -MT $(*F).o -MF dep/$(@F).d 
 
 ## Assembly specific flags
@@ -74,15 +75,15 @@ usbdrv.o: usbdrv/usbdrv.c
 oddebug.o: usbdrv/oddebug.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-uart.o: uart.c
-	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+uart.o: uart.cpp
+	$(CXX) $(INCLUDES) $(CFLAGS) -c  $<
 
-main.o: main.c
-	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+main.o: main.cpp
+	$(CXX) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
 $(TARGET): $(OBJECTS)
-	 $(CC) $(LDFLAGS) $(OBJECTS) $(LINKONLYOBJECTS) $(LIBDIRS) $(LIBS) -o $(TARGET)
+	 $(CXX) $(LDFLAGS) $(OBJECTS) $(LINKONLYOBJECTS) $(LIBDIRS) $(LIBS) -o $(TARGET)
 
 %.hex: $(TARGET)
 	avr-objcopy -O ihex $(HEX_FLASH_FLAGS)  $< $@
@@ -105,3 +106,8 @@ clean:
 ## Other dependencies
 -include $(shell mkdir dep 2>/dev/null) $(wildcard dep/*)
 
+
+AVRISP = /dev/ttyUSB0
+
+write:
+	avrdude -c avrisp -P $(AVRISP) -b 19200 -p m48 -U hfuse:w:0xdf:m  -U lfuse:w:0xe6:m -U flash:w:$(PROJECT).hex

@@ -16,9 +16,12 @@ General Description:
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>   /* needed by usbdrv.h */
+#include "uart.h"
+
+extern "C" {
 #include "oddebug.h"
 #include "usbdrv.h"
-#include "uart.h"
+}
 
 extern uchar    sendEmptyFrame;
 
