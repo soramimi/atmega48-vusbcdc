@@ -237,11 +237,13 @@ PROGMEM const char usbDescriptorConfiguration[] = {
 	0, // header functional descriptor
 	0x10, 0x01,
 
+	// CDC ACM
 	4, // sizeof(usbDescrCDC_AcmFn): length of descriptor in bytes
 	0x24, // descriptor type
 	2, // abstract control management functional descriptor
-	0x02, // SET_LINE_CODING,    GET_LINE_CODING, SET_CONTROL_LINE_STATE
+	0x02, // line coding and serial state
 
+	// CDC Union
 	5, // sizeof(usbDescrCDC_UnionFn): length of descriptor in bytes
 	0x24, // descriptor type
 	6, // union functional descriptor
@@ -319,7 +321,7 @@ void reset_io_buffer(void)
 // USB interface
 uchar usbFunctionSetup(uchar data[8])
 {
-#if 0
+#if 1
 	usbRequest_t *rq = (usbRequest *)data;
 
 	if ((rq->bmRequestType & USBRQ_TYPE_MASK) == USBRQ_TYPE_CLASS) { /* class request type */
@@ -352,11 +354,11 @@ uchar usbFunctionSetup(uchar data[8])
 	return 0;
 }
 
-#if 0
+#if 1
 // usbFunctionRead
 uchar usbFunctionRead(uchar *data, uchar len)
 {
-#if 0
+#if 1
 #if 0
 	usb_dword_t baud;
 	baud.dword = 19200;
