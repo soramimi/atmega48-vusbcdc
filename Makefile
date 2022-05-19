@@ -5,13 +5,13 @@ TARGET = $(PROJECT).elf
 AVRISP = /dev/ttyUSB0
 
 MCU = atmega48
-CLK = 16000000UL
+CLK = 20000000UL
 
 INCLUDES = -I. -Iusbdrv
-OBJECTS = usbdrv.o usbdrvasm.o uart.o main.o 
+OBJECTS = usbdrv.o usbdrvasm.o main.o
 
 COMMON = -mmcu=$(MCU) -DF_CPU=$(CLK)
-CFLAGS = $(COMMON) -Os -Wno-narrowing
+CFLAGS = $(COMMON) -std=c++11 -Os -Wno-narrowing
 
 CC = avr-gcc $(CFLAGS) $(INCLUDES)
 CXX = avr-g++ $(CFLAGS) $(INCLUDES)
@@ -25,10 +25,10 @@ usbdrvasm.o: usbdrv/usbdrvasm.S
 usbdrv.o: usbdrv/usbdrv.c
 	$(CC) -c $^
 
-uart.o: uart.cpp
+main.o: main.cpp
 	$(CXX) -c $^
 
-main.o: main.cpp
+avrisp.o: avrisp.cpp
 	$(CXX) -c $^
 
 $(TARGET): $(OBJECTS)
@@ -48,3 +48,8 @@ clean:
 .PHONY: write
 write: $(PROJECT).hex
 	avrdude -c avrisp -P $(AVRISP) -b 19200 -p m48 -U hfuse:w:0xdf:m  -U lfuse:w:0xe6:m -U flash:w:$(PROJECT).hex
+
+.PHONY: write2
+fetch: $(PROJECT).hex
+	avrdude -c avrisp -P /dev/ttyACM0 -b 19200 -p m48
+# -U hfuse:w:0xdf:m  -U lfuse:w:0xe6:m -U flash:w:$(PROJECT).hex
