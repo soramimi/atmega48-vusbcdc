@@ -5,7 +5,7 @@ TARGET = $(PROJECT).elf
 AVRISP = /dev/ttyUSB0
 
 MCU = atmega48
-CLK = 20000000UL
+CLK = 16000000UL
 
 INCLUDES = -I. -Iusbdrv
 OBJECTS = usbdrv.o usbdrvasm.o main.o

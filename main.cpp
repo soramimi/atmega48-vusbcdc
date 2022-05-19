@@ -204,7 +204,7 @@ enum {
 	SEND_BREAK
 };
 
-static PROGMEM const char configDescrCDC[] = {
+PROGMEM const char usbDescriptorConfiguration[] = {
 	// USB configuration descriptor
 	9, // sizeof(usbDescrConfig): length of descriptor in bytes
 	USBDESCR_CONFIG, // descriptor type
@@ -291,8 +291,8 @@ uchar usbFunctionDescriptor(usbRequest_t *rq)
 		usbMsgPtr = (uchar *)usbDescriptorDevice;
 		return usbDescriptorDevice[0];
 	} else { /* must be config descriptor */
-		usbMsgPtr = (uchar *)configDescrCDC;
-		return sizeof(configDescrCDC);
+		usbMsgPtr = (uchar *)usbDescriptorConfiguration;
+		return sizeof(usbDescriptorConfiguration);
 	}
 }
 
