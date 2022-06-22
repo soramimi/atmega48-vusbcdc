@@ -280,7 +280,7 @@ PROGMEM const char usbDescriptorConfiguration[] = {
 	// Endpoint Descriptor
 	7, // sizeof(usbDescrEndpoint)
 	USBDESCR_ENDPOINT, // descriptor type = endpoint
-	0x81, // IN endpoint number 1
+	0x82, // IN endpoint number 1
 	0x02, // attrib: Bulk endpoint
 	8, 0, // maximum packet size
 	0, // in ms

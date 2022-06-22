@@ -2,7 +2,7 @@
 PROJECT = a
 TARGET = $(PROJECT).elf
 
-AVRISP = /dev/ttyUSB0
+AVRISP = /dev/ttyACM0
 
 MCU = atmega48
 CLK = 16000000UL
@@ -49,7 +49,6 @@ clean:
 write: $(PROJECT).hex
 	avrdude -c avrisp -P $(AVRISP) -b 19200 -p m48 -U hfuse:w:0xdf:m  -U lfuse:w:0xe6:m -U flash:w:$(PROJECT).hex
 
-.PHONY: write2
-fetch: $(PROJECT).hex
-	avrdude -c avrisp -P /dev/ttyACM0 -b 19200 -p m48
-# -U hfuse:w:0xdf:m  -U lfuse:w:0xe6:m -U flash:w:$(PROJECT).hex
+.PHONY: fetch
+fetch:
+	avrdude -c avrisp -P $(AVRISP) -b 19200 -p m48
